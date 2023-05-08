@@ -1,0 +1,26 @@
+service: serverless-framework-node
+provider:
+  name: azure
+  region: Brazil South
+  runtime: nodejs10
+plugins:
+  - serverless-azure-functions
+  - serverless-express
+  - serverless-webpack
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+package:
+  exclude:
+    - local.settings.json
+    - host.json
+functions:
+  make-pdf:
+    handler: handler.handler
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel: anonymous
+          methods:
+            - get
